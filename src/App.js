@@ -18,7 +18,7 @@ class App extends Component {
   constructor() {  // Create and initialize state
     super(); 
     this.state = {
-      accountBalance: 1234567.89,
+      accountBalance: 0,
       creditList: [],
       debitList: [],
       currentUser: {
@@ -26,6 +26,30 @@ class App extends Component {
         memberSince: '11/22/99',
       }
     };
+  }
+
+  calculateBalance() {
+    if (this.state.creditList.length > 0 && this.state.debitList.length > 0) {
+      let credits = 0;
+      let debits = 0;
+      for (var i = 0; i < this.state.creditList.length; i++) {
+        credits += this.state.creditList[i]['amount'];
+      }
+      for (var i = 0; i < this.state.debitList.length; i++) {
+        debits += this.state.debitList[i]['amount'];
+      }
+      this.setState({accountBalance: credits - debits});
+    }
+  }
+
+  componentDidMount() {
+    fetch("https://johnnylaicode.github.io/api/credits.json").then((response) => response.json()).then((data) => {
+      this.setState({ creditList: data });
+    }).then(() => {
+      fetch("https://johnnylaicode.github.io/api/debits.json").then((response) => response.json()).then((data) => {
+        this.setState({ debitList: data }, () => this.calculateBalance());
+      });
+    });
   }
 
   // Update state's currentUser (userName) after "Log In" button is clicked
@@ -43,8 +67,8 @@ class App extends Component {
       <UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince} />
     )
     const LogInComponent = () => (<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} />)
-    const CreditsComponent = () => (<Credits credits={this.state.creditList} />) 
-    const DebitsComponent = () => (<Debits debits={this.state.debitList} />) 
+    const CreditsComponent = () => (<Credits credits={this.state.creditList} balance={this.state.accountBalance} />) 
+    const DebitsComponent = () => (<Debits debits={this.state.debitList}  balance={this.state.accountBalance}/>) 
 
     // Important: Include the "basename" in Router, which is needed for deploying the React app to GitHub Pages
     return (
