@@ -6,9 +6,38 @@ Note: You need to work on this file for the Assignment.
 ==================================================*/
 import { Link } from 'react-router-dom';
 import AccountBalance from './AccountBalance';
+import { useState } from 'react';
 
 const Debits = (props) => {
-  const { debits, balance } = props;
+  const { debits, balance, updateDebt, updateBalance } = props;
+
+  const [updateDebtEntry, setDebt] = useState('');
+  const [newAmountEntry, setAmount] = useState('');//amount is default 0
+
+  const newEntry = (event) => {
+    event.preventDefault();
+
+    if (!updateDebtEntry || !newAmountEntry) {
+      return;
+    }
+
+    if (isNaN(newAmountEntry)) {
+      alert('Amount must be a valid number.');
+      return;
+    }
+
+    const updatedBalance = balance - parseFloat(newAmountEntry);
+    updateBalance(updatedBalance);
+
+    const addEntryDebt = {
+      id: debits.length + 1,
+      description: updateDebtEntry, // Correct the property name
+      amount: newAmountEntry,
+      date: new Date()
+    };
+
+    updateDebt(addEntryDebt);
+  };
 
   return (
     <div style={{ textAlign: 'center' }}>
@@ -28,14 +57,14 @@ const Debits = (props) => {
       <br />
       <AccountBalance accountBalance={balance} />
       <br />
-      <form>
-        <label> Description:</label>
-        <input type="text"></input>
-        <label> Amount:</label>
-        <input type="text"></input>
-        <button><p>Add Debit</p></button>
-
+      <form onSubmit={newEntry}>
+        <label>Description:</label>
+        <input type="text" onChange={event => setDebt(event.target.value)} />
+        <label>Amount:</label>
+        <input type="text" onChange={event => setAmount(event.target.value)} />
+        <button type="submit">Add Debit</button>
       </form>
+
       <Link to="/">Return to Home</Link>
     </div>
   );
