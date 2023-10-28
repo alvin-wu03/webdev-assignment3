@@ -60,12 +60,6 @@ class App extends Component {
     });
   }
 
-  updateBalance = (newBalance) => {
-    this.setState({
-      accountBalance: newBalance
-    });
-  }
-
   componentDidMount() {
     fetch("https://johnnylaicode.github.io/api/credits.json").then((response) => response.json()).then((data) => {
       this.setState({ creditList: data });
