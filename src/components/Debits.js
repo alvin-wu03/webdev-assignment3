@@ -18,6 +18,7 @@ const Debits = (props) => {
     event.preventDefault();
 
     if (!updateDebtEntry || !newAmountEntry) {
+      alert('Field(s) cannot be left empty');
       return;
     }
 
@@ -31,7 +32,7 @@ const Debits = (props) => {
 
     const addEntryDebt = {
       id: debits.length + 1,
-      description: updateDebtEntry, // Correct the property name
+      description: updateDebtEntry,
       amount: newAmountEntry,
       date: new Date()
     };
