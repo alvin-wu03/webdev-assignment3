@@ -7,6 +7,7 @@ Note: You need to work on this file for the Assignment.
 import {Link} from 'react-router-dom';
 import AccountBalance from './AccountBalance';
 import React, { useState } from 'react';
+import "../css/Credits.css"
 
 const Credits = (props) => {
   const { credits, balance, updateBalance, updateCreditList } = props;
@@ -32,8 +33,7 @@ const Credits = (props) => {
       <ul style={{listStyle: 'none', paddingLeft: 0, textalign: 'center'}}>
         {credits.map((credit) => (
         <li key={credit.id}>
-          -
-          <div>
+          <div className='credit-item'>
             <p><strong>Description:</strong> {credit.description}</p>
             <p><strong>Amount:</strong> ${parseFloat(credit.amount).toFixed(2)}</p>
             <p><strong>Date:</strong> {new Date(credit.date).toISOString().split('T')[0]}</p>

@@ -26,11 +26,6 @@ const Debits = (props) => {
         ))}
       </ul>
       <br/>
-      <div>
-        <div>TESt</div>
-        <input type="text" placeholder="Description" id="description" />
-        <input type="number" placeholder="Amount" id="amount" />
-      </div>
       <AccountBalance accountBalance={balance}/>
       <br/>
       <Link to="/">Return to Home</Link>
