@@ -6,18 +6,21 @@ Note: You need to work on this file for the Assignment.
 ==================================================*/
 import {Link} from 'react-router-dom';
 import AccountBalance from './AccountBalance';
+import React, { useState } from 'react';
 
 const Credits = (props) => {
   const { credits, balance, updateBalance, updateCreditList } = props;
+  const [description, setDescription] = useState('');
+  const [amount, setAmount] = useState('');
 
   const addCredit = (e) => {
     e.preventDefault()
-    const updatedBalance = balance + parseFloat(document.getElementById('amount').value);
+    const updatedBalance = balance + parseFloat(amount);
     updateBalance(updatedBalance);
     const newCredit = {
       id: credits.length + 1,
-      description: document.getElementById('description').value,
-      amount: document.getElementById('amount').value,
+      description,
+      amount,
       date: new Date()
     };
     updateCreditList(newCredit);
@@ -41,9 +44,9 @@ const Credits = (props) => {
       <br/>
       <div>
         <label htmlFor='description'><strong>Description:</strong></label>
-        <input type="text" placeholder="Description" id="description" />
+        <input type="text" placeholder="Description" id="description" onChange={e => setDescription(e.target.value)}/>
         <label htmlFor='amount'><strong>Amount:</strong></label>
-        <input type="number" placeholder="Amount" id="amount" />
+        <input type="number" placeholder="Amount" id="amount" onChange={e => setAmount(e.target.value)}/>
         <button onClick={addCredit}>Add Credit</button>
       </div>
       <AccountBalance accountBalance={balance}/>
