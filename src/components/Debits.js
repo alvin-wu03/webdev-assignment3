@@ -7,6 +7,7 @@ Note: You need to work on this file for the Assignment.
 import { Link } from 'react-router-dom';
 import AccountBalance from './AccountBalance';
 import { useState } from 'react';
+import '../css/Debit.css'
 
 const Debits = (props) => {
   const { debits, balance, updateDebt, updateBalance } = props;
@@ -47,7 +48,7 @@ const Debits = (props) => {
         {debits.map((debit) => (
           <li key={debit.id}>
             -
-            <div>
+            <div className='debit-item'>
               <p><strong>Description:</strong> {debit.description}</p>
               <p><strong>Amount:</strong> ${parseFloat(debit.amount).toFixed(2)}</p>
               <p><strong>Date:</strong> {new Date(debit.date).toISOString().split('T')[0]}</p>
