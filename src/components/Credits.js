@@ -42,14 +42,16 @@ const Credits = (props) => {
         ))}
       </ul>
       <br/>
-      <div>
+      <AccountBalance accountBalance={balance}/>
+      <div className='add-credit'>
+        <h3>Add Credit</h3>
         <label htmlFor='description'><strong>Description:</strong></label>
         <input type="text" placeholder="Description" id="description" onChange={e => setDescription(e.target.value)}/>
         <label htmlFor='amount'><strong>Amount:</strong></label>
         <input type="number" placeholder="Amount" id="amount" onChange={e => setAmount(e.target.value)}/>
         <button onClick={addCredit}>Add Credit</button>
       </div>
-      <AccountBalance accountBalance={balance}/>
+
       <br/>
       <Link to="/">Return to Home</Link>
     </div>
